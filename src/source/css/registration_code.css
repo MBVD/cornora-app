@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+  --color-white: #FFFFFF;
+  --color-darkWhite: #F0F0F0;
+  --color-black: #000000;
+  --color-lightBlack: #2D2D2D;
+  --color-orange: #FF833E;
+  --color-lightOrange: #FF9C67;
+  --color-lightGray: #C9C9C9;
+  --color-Gray: #969696;
+  --color-darkGray: #242424;
+  --font-familyEXO2: "Exo 2", sans-serif;
+  --font-sizeSmall: 13px;
+  --font-sizeLarge: 15px;
+  --font-sizeHuge: 23px;
+  --border-small: 1px solid var(--color-black);
+  --border-radiusSmall: 17px;
+  --border-radiusHeader: 0 0 13px 13px;
+  --border-large: 2px solid var(--color-lightGray);
+  --border-radiusLarge: 15px;
+  --container-width: 384px;
+  --container-height: 110px;
+  --transition-duration: 0.2s;
+  --padding-global: 0 16px; }
+
+/* @font-face {
+  font-family: 'Exo2';
+  src: url("./fonts/PlaywriteESDeco-VariableFont_wght.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; } */
+*, *::after, *::before {
+  box-sizing: border-box; }
+
+body {
+  top: 0;
+  left: 0;
+  margin: 0;
+  background-color: var(--color-lightBlack);
+  overflow: hidden;
+  font-family: var(--font-familyEXO2);
+  width: 100%;
+  height: 100vh; }
+
+.header {
+  width: 100%;
+  position: fixed;
+  z-index: 1000; }
+  .header__top {
+    width: 100%;
+    height: 47px;
+    background-color: var(--color-darkGray);
+    z-index: 900; }
+  .header__back {
+    width: 100%;
+    height: 46px;
+    z-index: 900;
+    background-color: var(--color-darkGray);
+    margin-top: -1px;
+    display: flex;
+    align-items: center; }
+    .header__back-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      background-color: var(--color-darkGray);
+      color: var(--color-Gray);
+      padding: 10px 16px;
+      text-decoration: none;
+      position: absolute; }
+      .header__back-button-text {
+        margin-bottom: -1px;
+        margin-left: 4px;
+        font-size: 14px;
+        font-family: var(--font-familyEXO2); }
+  .header__back-title {
+    position: absolute;
+    color: var(--color-white);
+    font-size: 18px;
+    font-weight: 500;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center; }
+
+.main {
+  display: flex;
+  align-items: center;
+  padding: var(--padding-global);
+  color: var(--color-darkWhite);
+  font-size: 14px;
+  font-weight: 300;
+  height: 100%; }
+  .main__form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 175px 0 58px 0; }
+    .main__form-desc {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 12px;
+      gap: 20px; }
+    .main__form-inputs {
+      display: flex;
+      justify-content: space-between; }
+      .main__form-inputs-item {
+        width: 68px;
+        height: 80px;
+        border: none;
+        border-radius: 12px;
+        box-shadow: inset 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
+        text-align: center;
+        background-color: #4C4C4C;
+        font-size: 40px;
+        color: var(--color-darkWhite); }
+        .main__form-inputs-item:focus {
+          background-color: #3D3D3D;
+          box-shadow: inset 1px 1px 4px 0 rgba(0, 0, 0, 0.1); }
+    .main__form-sms {
+      margin-top: 12px;
+      text-align: center; }
+    .main__form-submit {
+      min-height: 44px;
+      width: 100%;
+      background-color: var(--color-orange);
+      color: var(--color-darkGray);
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-familyEXO2);
+      font-size: 18px;
+      font-weight: 600; }
+      @media (hover: hover) {
+        .main__form-submit:hover {
+          background-color: #FF7227; } }
+      @media (hover: none) {
+        .main__form-submit:active {
+          background-color: #FF7227; } }
+
