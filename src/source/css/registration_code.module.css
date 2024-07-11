@@ -31,12 +31,15 @@
   font-display: swap; } */
 *, *::after, *::before {
   box-sizing: border-box; }
-
+.main__form_timer{
+  display: block;
+  margin-top: 10px;
+}
 body {
   top: 0;
   left: 0;
   margin: 0;
-  background-color: var(--color-lightBlack);
+  /* background-color: var(--color-lightBlack); */
   overflow: hidden;
   font-family: var(--font-familyEXO2);
   width: 100%;
@@ -59,7 +62,7 @@ body {
     margin-top: -1px;
     display: flex;
     align-items: center; }
-    .header__back-button {
+    .header__back_button {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -69,12 +72,12 @@ body {
       padding: 10px 16px;
       text-decoration: none;
       position: absolute; }
-      .header__back-button-text {
+      .header__back_button_text {
         margin-bottom: -1px;
         margin-left: 4px;
         font-size: 14px;
         font-family: var(--font-familyEXO2); }
-  .header__back-title {
+  .header__back_title {
     position: absolute;
     color: var(--color-white);
     font-size: 18px;
@@ -98,16 +101,16 @@ body {
     justify-content: space-between;
     flex-direction: column;
     padding: 175px 0 58px 0; }
-    .main__form-desc {
+    .main__form_desc {
       display: flex;
       justify-content: center;
       flex-direction: column;
       padding: 0 12px;
       gap: 20px; }
-    .main__form-inputs {
+    .main__form_inputs {
       display: flex;
       justify-content: space-between; }
-      .main__form-inputs-item {
+      .main__form_inputs_item {
         width: 68px;
         height: 80px;
         border: none;
@@ -117,13 +120,13 @@ body {
         background-color: #4C4C4C;
         font-size: 40px;
         color: var(--color-darkWhite); }
-        .main__form-inputs-item:focus {
+        .main__form_inputs_item:focus {
           background-color: #3D3D3D;
           box-shadow: inset 1px 1px 4px 0 rgba(0, 0, 0, 0.1); }
-    .main__form-sms {
+    .main__form_sms {
       margin-top: 12px;
       text-align: center; }
-    .main__form-submit {
+    .main__form_submit {
       min-height: 44px;
       width: 100%;
       background-color: var(--color-orange);
@@ -134,9 +137,9 @@ body {
       font-size: 18px;
       font-weight: 600; }
       @media (hover: hover) {
-        .main__form-submit:hover {
+        .main__form_submit:hover {
           background-color: #FF7227; } }
       @media (hover: none) {
-        .main__form-submit:active {
+        .main__form_submit:active {
           background-color: #FF7227; } }
 

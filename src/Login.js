@@ -238,7 +238,7 @@ const Login = () => {
           </div>
 
           <div className={`main__container-registration ${showRegistration ? '' : 'visually-hidden'}`}>
-            <form action="registrationCode.html" className="main__container-registration-form">
+            <form action="registration" className="main__container-registration-form">
               <label htmlFor="main__container-registration-number" className="main__container-registration-form-inputText">
                 Введите номер телефона
               </label>
