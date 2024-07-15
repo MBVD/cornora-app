@@ -20,19 +20,30 @@ const RegistrationCode = () => {
   }
 
   const handleInputsChanges = async (e, index) => {
+    if (e.target.value.length > 1) {
+      e.target.value = e.target.value.charAt(0);
+    }
     e.target.onkeydown = (event) => handleBackspace(event, index);
     setInputValues([...inputValues, e.target.value]);
-    const nextInputIndex = index + 1 < 4 ? index + 1 : index;
+    const nextInputIndex = index + 1 < 4 ? index + 1 % 4 : index;
     setInputIndex(nextInputIndex);
-
-    setTimeout(async () => {
-      const inputs = document.querySelectorAll(`.${styles.main__form_inputs_item}`);
-      if (inputs[nextInputIndex]) {
-        inputs[nextInputIndex].focus();
+    if (inputValues.length == 3){
+      const button = document.querySelector(`.${styles.main__form_submit}`)
+      console.log(button)
+      button.style.opacity = "1";
+    }
+    if (e.target.value.length === 1) {
+      setTimeout(async () => {
+        const inputs = document.querySelectorAll(`.${styles.main__form_inputs_item}`);
+        if (inputs[nextInputIndex] && e.target.value.length === 1 && nextInputIndex < 4) {
+          inputs[nextInputIndex].focus();
+        } else {
+          console.log('here')
+          e.target.blur();
       }
-    }, 0);
+      }, 0);    }
   };
-  const endTime = Date.now() + 30 * 1000; // Устанавливаем конечное время
+  const endTime = Date.now() + 30 * 1000;
 
   const countdown = setInterval(() => {
     const timer = document.querySelector(`.${styles.main__form_timer}`);
@@ -52,7 +63,7 @@ const RegistrationCode = () => {
         <div className={styles.header__top}></div>
         
         <div className={styles.header__back}>
-            <a href="login.html" type="button" className={styles.header__back_button}>
+            <a href="/" type="button" className={styles.header__back_button}>
                 <img src={login_reg_back} className={styles.header__back_button_img} alt="Назад"/> 
                 <div className={styles.header__back_button_text}>Назад</div>
             </a>

@@ -164,6 +164,27 @@ const Login = () => {
     };
   }, []);
 
+  const send_number = (e) => {
+    e.preventDefault()
+    const number_input = document.querySelector("#main__container-registration-number")
+    let number = number_input.value.split("|")[1]
+    fetch("", {
+      method: 'POST',
+      headers: {
+
+      },
+      body: JSON.stringify({
+        phone: number,
+      }),
+    }).then((response) => {
+      if (response.ok){
+        const targetUrl = "/registration" + "?phone=" + encodeURIComponent(number);
+        window.location.href = targetUrl;
+      }
+    })
+    console.log(number)
+  }
+
   return (
     <div>
       <header className="header">
@@ -238,7 +259,7 @@ const Login = () => {
           </div>
 
           <div className={`main__container-registration ${showRegistration ? '' : 'visually-hidden'}`}>
-            <form action="registration" className="main__container-registration-form">
+            <form className="main__container-registration-form">
               <label htmlFor="main__container-registration-number" className="main__container-registration-form-inputText">
                 Введите номер телефона
               </label>
@@ -249,7 +270,7 @@ const Login = () => {
                 placeholder="Введите номер телефона"
                 required
               />
-              <input type="submit" value="Далее" className="main__container-registration-form-submit" />
+              <input type="submit" value="Далее" className="main__container-registration-form-submit" onClick = {(e) => send_number(e)}/>
             </form>
           </div>
         </div>
