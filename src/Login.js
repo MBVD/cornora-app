@@ -15,7 +15,7 @@ import login_reg_plus from './source/images/login/reg-plus.svg';
 import login_reg_track from './source/images/login/reg-track.png';
 import login_reg_upload from './source/images/login/reg-upload.svg';
 
-const Login = () => {
+const Login = ({phoneNumber, set_number, api, token}) => {
   const [showSwipe, setShowSwipe] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
@@ -168,21 +168,26 @@ const Login = () => {
     e.preventDefault()
     const number_input = document.querySelector("#main__container-registration-number")
     let number = number_input.value.split("|")[1]
-    fetch("", {
+    // const token = import.meta.env.VITE_ACCESS_TOKEN;
+    // console.log(import.meta.env.VITE_ACCESS_TOKEN)
+    // TODO сделать номральный доступ к файлу окружения
+    fetch(api + "auth/send_sms/", {
       method: 'POST',
       headers: {
-
+        'Content-Type': 'application/json',
+        'Authorization': token 
       },
       body: JSON.stringify({
         phone: number,
       }),
     }).then((response) => {
       if (response.ok){
-        const targetUrl = "/registration" + "?phone=" + encodeURIComponent(number);
+        set_number(number);
+        console.log(phoneNumber)
+        const targetUrl = "/registration";
         window.location.href = targetUrl;
       }
     })
-    console.log(number)
   }
 
   return (

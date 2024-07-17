@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useParams } from 'react';
 import styles from './source/css/registration_code.module.css';
 import login_reg_back from './source/images/login/reg-back.svg';
 
 
 
-const RegistrationCode = () => {
+const RegistrationCode = ({phoneNumber, api, token}) => {
 
   const [inputValues, setInputValues] = useState([]);
   const [inputIndex, setInputIndex] = useState(0);
@@ -24,13 +24,16 @@ const RegistrationCode = () => {
       e.target.value = e.target.value.charAt(0);
     }
     e.target.onkeydown = (event) => handleBackspace(event, index);
-    setInputValues([...inputValues, e.target.value]);
+    let cmp = inputValues;
+    cmp[index] = e.target.value;
+    setInputValues(cmp);
     const nextInputIndex = index + 1 < 4 ? index + 1 % 4 : index;
     setInputIndex(nextInputIndex);
     if (inputValues.length == 3){
       const button = document.querySelector(`.${styles.main__form_submit}`)
       console.log(button)
       button.style.opacity = "1";
+      button.removeAttribute('disabled');
     }
     if (e.target.value.length === 1) {
       setTimeout(async () => {
@@ -57,6 +60,27 @@ const RegistrationCode = () => {
     }
   }, 1000);
 
+  const submitCode = (e) => {
+    let input_values_string = inputValues.join("").toString()
+    fetch(api + "auth/verify/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token 
+      },
+      body: JSON.stringify({
+        phone: phoneNumber,
+        passcode: input_values_string
+      }),
+    }).then((response) => {
+      if (response.ok){
+        console.log(phoneNumber)
+        const targetUrl = "";
+        window.location.href = targetUrl;
+      }
+    })
+  }
+
   return (
     <div>
       <header className={styles.header}>
@@ -73,7 +97,7 @@ const RegistrationCode = () => {
       </header>
 
       <main className={styles.main}>
-        <form action="registration" className={styles.main__form}>
+        <form className={styles.main__form}>
           <div className={styles.main__form_desc}>
             <div className={styles.main__form_text}>
               Мы отправили проверочный код на номер <br />
@@ -93,7 +117,7 @@ const RegistrationCode = () => {
             </div>
           </div>
 
-          <input style={{opacity: 0.5}} type="submit" value="Далее" className={styles.main__form_submit} disabled/>
+          <input style={{opacity: 0.5}} type="submit" value="Далее" onClick = {(e) => submitCode(e)} className={styles.main__form_submit} disabled/>
         </form>
 
       </main>

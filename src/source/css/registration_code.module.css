@@ -126,6 +126,7 @@ body {
       margin-top: 12px;
       text-align: center; }
     .main__form_submit {
+      margin-top: 10px;
       min-height: 44px;
       width: 100%;
       background-color: var(--color-orange);
