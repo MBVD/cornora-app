@@ -4,6 +4,7 @@ import Login from './Login'
 import RegistrationCode from './RegistrationCode';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import RegistrationForm from './RegistrationForm';
 
 function App() {
   const [phoneNumber, setPhoneNumber] = useState(() => {
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path = "/" element = {<Login phoneNumber={phoneNumber} set_number={set_number} api = {api} token = {token}/>} />
         <Route path = "/registration" element = {<RegistrationCode phoneNumber = {phoneNumber} api = {api} token = {token}/>} />
+        <Route path = "/registartion_form" element = {<RegistrationForm phoneNumber = {phoneNumber} api = {api} token = {token} />}/>
       </Routes>
     </Router>
   );

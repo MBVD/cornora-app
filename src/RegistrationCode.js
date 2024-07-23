@@ -61,6 +61,7 @@ const RegistrationCode = ({phoneNumber, api, token}) => {
   }, 1000);
 
   const submitCode = (e) => {
+    e.preventDefault();
     let input_values_string = inputValues.join("").toString()
     fetch(api + "auth/verify/", {
       method: 'POST',
@@ -75,7 +76,7 @@ const RegistrationCode = ({phoneNumber, api, token}) => {
     }).then((response) => {
       if (response.ok){
         console.log(phoneNumber)
-        const targetUrl = "";
+        const targetUrl = "/registartion_form";
         window.location.href = targetUrl;
       }
     })
@@ -97,7 +98,7 @@ const RegistrationCode = ({phoneNumber, api, token}) => {
       </header>
 
       <main className={styles.main}>
-        <form className={styles.main__form}>
+        <form className={styles.main__form} onSubmit={(e) => submitCode(e)}>
           <div className={styles.main__form_desc}>
             <div className={styles.main__form_text}>
               Мы отправили проверочный код на номер <br />
