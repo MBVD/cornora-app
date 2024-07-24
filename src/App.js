@@ -5,6 +5,10 @@ import RegistrationCode from './RegistrationCode';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import RegistrationForm from './RegistrationForm';
+import WhoAreYou from './WhoAreYou';
+import Owner from './Owner';
+import Carrier from './Carrier';
+import Broker from './Broker'
 
 function App() {
   const [phoneNumber, setPhoneNumber] = useState(() => {
@@ -28,6 +32,10 @@ function App() {
         <Route path = "/" element = {<Login phoneNumber={phoneNumber} set_number={set_number} api = {api} token = {token}/>} />
         <Route path = "/registration" element = {<RegistrationCode phoneNumber = {phoneNumber} api = {api} token = {token}/>} />
         <Route path = "/registartion_form" element = {<RegistrationForm phoneNumber = {phoneNumber} api = {api} token = {token} />}/>
+        <Route path = "/who_are_you" element = {<WhoAreYou/>}/>
+        <Route path = "/owner" element = {<Owner/>}/>
+        <Route path = "/carrier" element = {<Carrier/>}/>
+        <Route path = "/broker" element = {<Broker/>}/>
       </Routes>
     </Router>
   );

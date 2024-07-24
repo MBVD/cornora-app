@@ -19,14 +19,13 @@ const RegistrationForm = ({phoneNumber, api, token}) => {
     fetch(api + "auth/register/", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token 
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(
         inputs
       ),
     }).then((response) => {
-      console.log(response)
+      console.log(response.text())
       if (response.ok){
         const targetUrl = "/";
         window.location.href = targetUrl;
