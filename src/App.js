@@ -20,21 +20,32 @@ function App() {
   const api = "http://localhost:8000/"
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5MjI1ODM3LCJpYXQiOjE3MTkyMjIyMzcsImp0aSI6Ijc2NjgzMjhjNmViNDQyOTA5N2U4NGY1ZTJmZjRlYzJjIiwidXNlcl9pZCI6MjR9.on_weFLiZPvN0QrxWVdisZ-5v19Ru_22S4X8cfp4ufw"
 
-  useEffect (() => {
-    localStorage.setItem('tel', phoneNumber)
-  }, [phoneNumber])
-
   const set_number = (number) => {
     setPhoneNumber(number)
   }
+
+  const [regToken, setRegToken] = useState(() => {
+    const savedRegToken = localStorage.getItem('token');
+    return savedRegToken || "";
+  });
+
+  const set_token = (token) => {
+    setRegToken(token);
+  }
+
+  useEffect (() => {
+    localStorage.setItem('tel', phoneNumber)
+    localStorage.setItem('token', regToken)
+  }, [phoneNumber, regToken])
+
   return (
     <Router>
       <Routes>
         <Route path = "/" element = {<Login phoneNumber={phoneNumber} set_number={set_number} api = {api} token = {token}/>} />
         <Route path = "/registration" element = {<RegistrationCode phoneNumber = {phoneNumber} api = {api} token = {token}/>} />
-        <Route path = "/registartion_form" element = {<RegistrationForm phoneNumber = {phoneNumber} api = {api} token = {token} />}/>
+        <Route path = "/registartion_form" element = {<RegistrationForm phoneNumber = {phoneNumber} api = {api} token = {token} set_token = {set_token} />}/>
         <Route path = "/who_are_you" element = {<WhoAreYou/>}/>
-        <Route path = "/owner" element = {<Owner/>}/>
+        <Route path = "/owner" element = {<Owner access_token={regToken} api = {api}/>}/>
         <Route path = "/carrier" element = {<Carrier/>}/>
         <Route path = "/broker" element = {<Broker/>}/>
         <Route path = "/owner_photo" element = {<OwnerPhoto/>}/>

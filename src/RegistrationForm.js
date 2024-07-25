@@ -3,7 +3,7 @@ import { useState } from 'react'
 import login_reg_back from './source/images/login/reg-back.svg';
 
 
-const RegistrationForm = ({phoneNumber, api, token}) => {
+const RegistrationForm = ({phoneNumber, api, token, set_token}) => {
   const [inputs, setInputs] = useState({phone: phoneNumber});
 
   const handleChange = (e) => {
@@ -26,7 +26,11 @@ const RegistrationForm = ({phoneNumber, api, token}) => {
       ),
     }).then((response) => {
       if (response.ok){
-        // console.log(response)
+        var body = response.json()
+        body.then(response => {
+          const accessToken = response.access_token;
+          set_token(accessToken);
+        });
         const targetUrl = "/who_are_you";
         window.location.href = targetUrl;
       }
