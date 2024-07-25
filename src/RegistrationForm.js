@@ -4,7 +4,7 @@ import login_reg_back from './source/images/login/reg-back.svg';
 
 
 const RegistrationForm = ({phoneNumber, api, token}) => {
-  const [inputs, setInputs] = useState({"phone": phoneNumber});
+  const [inputs, setInputs] = useState({phone: phoneNumber});
 
   const handleChange = (e) => {
     let name = e.target.name
@@ -25,9 +25,9 @@ const RegistrationForm = ({phoneNumber, api, token}) => {
         inputs
       ),
     }).then((response) => {
-      console.log(response.text())
       if (response.ok){
-        const targetUrl = "/";
+        // console.log(response)
+        const targetUrl = "/who_are_you";
         window.location.href = targetUrl;
       }
     })

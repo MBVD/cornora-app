@@ -9,6 +9,7 @@ import WhoAreYou from './WhoAreYou';
 import Owner from './Owner';
 import Carrier from './Carrier';
 import Broker from './Broker'
+import OwnerPhoto from './OwnerPhoto';
 
 function App() {
   const [phoneNumber, setPhoneNumber] = useState(() => {
@@ -36,6 +37,7 @@ function App() {
         <Route path = "/owner" element = {<Owner/>}/>
         <Route path = "/carrier" element = {<Carrier/>}/>
         <Route path = "/broker" element = {<Broker/>}/>
+        <Route path = "/owner_photo" element = {<OwnerPhoto/>}/>
       </Routes>
     </Router>
   );
