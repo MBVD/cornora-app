@@ -46,6 +46,10 @@ const OwnerPhoto = ({api, access_token}) => {
         const targetUrl = "/who_are_you";
         window.location.href = targetUrl;
       }
+      var body = response.json()
+        body.then(response => {
+          console.log(response)
+        });
       console.log(response.json())
     })
     console.log(inputs)
