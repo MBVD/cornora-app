@@ -11,7 +11,7 @@ const WhoAreYou = () => {
   const [redirectUrl, changeRedirectUrl] = useState('')
 
   const chooseOption = (e) => {
-    changeRedirectUrl(redirectUrl + e.target.value);
+    changeRedirectUrl(e.target.value);
     const button = document.querySelector(`.${styles.main__form_submit}`)
     button.style.opacity = "1"
     button.removeAttribute("disabled")

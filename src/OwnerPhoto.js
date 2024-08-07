@@ -1,12 +1,56 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import reg_back from "./source/images/login/reg-back.svg";
 import reg_plus from "./source/images/login/reg-plus.svg";
 import styles from "./source/css/owner_photo.module.css";
 
-const OwnerPhoto = () => {
+const OwnerPhoto = ({api, access_token}) => {
   const frontPopupRef = useRef(null);
   const backPopupRef = useRef(null);
   const formRef = useRef(null);
+  const frontButton = useRef(null)
+  const backButton = useRef(null)
+
+  const [inputs, setInputs] = useState();
+
+  const handleChange = (e) => {
+    let name = e.target.name
+    let value = e.target.value
+    if (e.target.files && e.target.files.length > 0){
+      console.log("heerjfkasljdfkls")
+      value = e.target.files[0];
+    }
+    setInputs(values => ({...values, [name]: value}));
+    backPopupRef.current.style.transform = 'translateY(100%)';
+    frontPopupRef.current.style.transform = 'translateY(100%)';
+    let background = formRef.current
+    background.style.filter = 'blur(0px)'
+  }
+
+  const sendData = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("id_front", inputs["id_front"]);
+    data.append("id_back", inputs["id_back"]);
+    data.forEach((value, key) => {
+      console.log(key, value);
+    });
+    fetch(api + "auth/upload_id/", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':  `Bearer ${access_token}`
+      },
+      body: data
+    }).then((response) => {
+      if (response.ok){
+        const targetUrl = "/who_are_you";
+        window.location.href = targetUrl;
+      }
+      console.log(response.json())
+    })
+    console.log(inputs)
+    console.log(`Bearer ${access_token}`)
+  }
 
   useEffect(() => {
     let startTouchY = 0;
@@ -28,7 +72,6 @@ const OwnerPhoto = () => {
       front_popup.style.transition = 'transform 0.3s ease-in-out';
       if (currentY - startTouchY > 100){
         let main_popup = front_popup
-        console.log(main_popup)
         main_popup.classList.add(`${styles.visually_hidden}`)
         front_popup.classList.remove(`${styles.pop_animation}`)
         front_popup.style.transform = 'translateY(100%)';
@@ -114,8 +157,9 @@ const OwnerPhoto = () => {
                 className={`${styles.main__form_container_add} ${styles.add}`}
                 data-popup="front"
                 onClick={Popup}
+                ref = {frontButton}
               >
-                <img src={reg_plus} alt="plus icon"/>
+                <img src={reg_plus} alt="plus icon" data-popup="front"/>
               </button>
             </div>
 
@@ -128,38 +172,41 @@ const OwnerPhoto = () => {
                 className={`${styles.main__form_container_add} ${styles.add}`}
                 data-popup="back"
                 onClick={Popup}
+                ref = {backButton}
               >
-                <img src={reg_plus} alt="plus icon"/>
+                <img src={reg_plus} alt="plus icon" data-popup="back"/>
               </button>
             </div>
           </div>
 
-          <input type="submit" value="Сохранить" className={styles.main__form_submit} />
+          <input type="submit" value="Сохранить" className={styles.main__form_submit} onClick = {(e) => {sendData(e)}} />
         </form>
 
-        <div ref={frontPopupRef} className={`${styles.main__pop} front ${styles.visually_hidden}`}>
-          <div className={styles.main__pop_container}>
-            <div className={styles.main__pop_container_holder}>
-              <button type="button" className={styles.main__pop_container_label}>Сделать фото</button>
-            </div>
-            <div className={styles.main__pop_container_holder}>
-              <label className={styles.main__pop_container_label} htmlFor="front-gallery">Выбрать из Галереи</label>
-              <input type="file" id="front_gallery" className={styles.main__pop_container_input} accept=".pdf" required />
+        <form>
+          <div ref={frontPopupRef} className={`${styles.main__pop} front ${styles.visually_hidden}`}>
+            <div className={styles.main__pop_container}>
+              <div className={styles.main__pop_container_holder}>
+                <button type="button" className={styles.main__pop_container_label}>Сделать фото</button>
+              </div>
+              <div className={styles.main__pop_container_holder}>
+                <label className={styles.main__pop_container_label} for="front_gallery">Выбрать из Галереи</label>
+                <input type="file" id="front_gallery" name = "id_front" className={styles.main__pop_container_input} accept=".pdf" required onChange={(e) => {handleChange(e)}} />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div ref={backPopupRef} className={`${styles.main__pop} back ${styles.visually_hidden}`}>
-          <div className={styles.main__pop_container}>
-            <div className={styles.main__pop_container_holder}>
-              <button type="button" className={styles.main__pop_container_label}>Сделать фото</button>
-            </div>
-            <div className={styles.main__pop_container_holder}>
-              <label className={styles.main__pop_container_label} htmlFor="back-gallery">Выбрать из Галереи</label>
-              <input type="file" id="back_gallery" className={styles.main__pop_container_input} accept=".pdf" required />
+          <div ref={backPopupRef} className={`${styles.main__pop} back ${styles.visually_hidden}`}>
+            <div className={styles.main__pop_container}>
+              <div className={styles.main__pop_container_holder}>
+                <button type="button" className={styles.main__pop_container_label}>Сделать фото</button>
+              </div>
+              <div className={styles.main__pop_container_holder}>
+                <label className={styles.main__pop_container_label} for="back_gallery">Выбрать из Галереи</label>
+                <input type="file" id="back_gallery" name = "id_back" className={styles.main__pop_container_input} accept=".pdf" required onChange={(e) => {handleChange(e)}}/>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </main>
     </body>
   );
