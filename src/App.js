@@ -10,6 +10,10 @@ import Owner from './Owner';
 import Carrier from './Carrier';
 import Broker from './Broker'
 import OwnerPhoto from './OwnerPhoto';
+import CarrierCarInfo from './CarrierCarInfo';
+import 'semantic-ui-css/semantic.min.css';
+import CarrierDocuments from './CarrierDocuments';
+import CarrierAviaCompany from './CarrierAviaCompany';
 
 function App() {
   const [phoneNumber, setPhoneNumber] = useState(() => {
@@ -48,7 +52,10 @@ function App() {
         <Route path = "/owner" element = {<Owner access_token={regToken} api = {api}/>}/>
         <Route path = "/carrier" element = {<Carrier/>}/>
         <Route path = "/broker" element = {<Broker/>}/>
-        <Route path = "/owner_photo" element = {<OwnerPhoto/>}/>
+        <Route path = "/owner_photo" element = {<OwnerPhoto access_token={regToken} api = {api}/>}/>
+        <Route path = "/carrier_car_info" element = {<CarrierCarInfo access_token={regToken} api = {api}/>}/>
+        <Route path = "/carrier_documents" element = {<CarrierDocuments access_token={regToken} api = {api}/>}/>
+        <Route path = "/carrier_aviacompany" element = {<CarrierAviaCompany access_token={regToken} api = {api}/>}/>
       </Routes>
     </Router>
   );
