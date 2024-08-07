@@ -45,7 +45,7 @@ const Broker = () => {
     e.preventDefault();
     console.log(inputs);
     if (1){
-      const targetUrl = "/carrier_documents";
+      const targetUrl = "/broker_documents";
       window.location.href = targetUrl;
     }
   }
