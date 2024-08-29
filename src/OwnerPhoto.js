@@ -37,7 +37,6 @@ const OwnerPhoto = ({api, access_token}) => {
     fetch(api + "auth/upload_id/", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
         'Authorization':  `Bearer ${access_token}`
       },
       body: data
@@ -194,7 +193,7 @@ const OwnerPhoto = ({api, access_token}) => {
               </div>
               <div className={styles.main__pop_container_holder}>
                 <label className={styles.main__pop_container_label} for="front_gallery">Выбрать из Галереи</label>
-                <input type="file" id="front_gallery" name = "id_front" className={styles.main__pop_container_input} accept=".pdf" required onChange={(e) => {handleChange(e)}} />
+                <input type="file" id="front_gallery" name = "id_front" className={styles.main__pop_container_input}  required onChange={(e) => {handleChange(e)}} />
               </div>
             </div>
           </div>
@@ -206,7 +205,7 @@ const OwnerPhoto = ({api, access_token}) => {
               </div>
               <div className={styles.main__pop_container_holder}>
                 <label className={styles.main__pop_container_label} for="back_gallery">Выбрать из Галереи</label>
-                <input type="file" id="back_gallery" name = "id_back" className={styles.main__pop_container_input} accept=".pdf" required onChange={(e) => {handleChange(e)}}/>
+                <input type="file" id="back_gallery" name = "id_back" className={styles.main__pop_container_input} required onChange={(e) => {handleChange(e)}}/>
               </div>
             </div>
           </div>
