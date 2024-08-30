@@ -3,23 +3,10 @@ import { useRef, useState } from 'react'
 import styles from './source/css/broker.module.css'
 import reg_back from './source/images/login/reg-back.svg'
 
-const Broker = () => {
+const Broker = ({api, access_token}) => {
   const formRef = useRef(null);
-  const [inputs, setInputs] = useState();
+  const [inputs, setInputs] = useState({type: "too"});
   const [isFull, setIsFull] = useState(false)
-
-  const [formData, setFormData] = useState({
-    mark: '',
-    model: ''
-  });
-
-  const handleChangeDropDown = (e, {name, value}) => {
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-    setInputs(values => ({...values, [name]: value}))
-  }
 
   const handleChange = (e) => {
     const inputs = formRef.current.querySelectorAll('input[required]');
@@ -35,7 +22,6 @@ const Broker = () => {
     let name = e.target.name
     let value = e.target.value
     if (e.target.files && e.target.files.length > 0){
-      console.log("heerjfkasljdfkls")
       value = e.target.files[0];
     }
     setInputs(values => ({...values, [name]: value}));
@@ -44,10 +30,26 @@ const Broker = () => {
   const sendData = (e) => {
     e.preventDefault();
     console.log(inputs);
-    if (1){
-      const targetUrl = "/broker_documents";
-      window.location.href = targetUrl;
-    }
+    fetch(api + "brokers/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}` 
+      },
+      body: JSON.stringify(
+        inputs
+      ),
+    }).then((response) => {
+      if (response.ok){
+        const targetUrl = "/broker_documents";
+        window.location.href = targetUrl;
+      }else{
+        var body = response.json()
+        body.then(response => {
+          console.log(response)
+        });
+      }
+    })
   }
   return (
     <div style = {{height: '100vh'}}>
@@ -70,18 +72,18 @@ const Broker = () => {
           <form action="broker-documents.html" className={styles.main__form} ref = {formRef} onSubmit={(e) => {sendData(e)}}>
               <div className={styles.main__form_holder}>
                   <div className={styles.main__form_holder_item}>
-                      <label className={styles.main__form_label} for="too">ТОО</label>
-                      <input type="text" id="too" className={styles.main__form_input} placeholder="Введите название ТОО" name = "too" required onChange={(e) => handleChange(e)} />
+                      <label className={styles.main__form_label} for="name">ТОО</label>
+                      <input type="text" id="name" className={styles.main__form_input} placeholder="Введите название ТОО" name = "name" required onChange={(e) => handleChange(e)} />
                   </div>
 
                   <div className={styles.main__form_holder_item}>
                       <label className={styles.main__form_label} for="bin">БИН</label>
-                      <input type="text" id="bin" className={styles.main__form_input} placeholder="Введите БИН" name = "bin" required onChange={(e) => handleChange(e)}/>
+                      <input type="text" id="bin" className={styles.main__form_input} placeholder="Введите БИН" name = "bin_iin" required onChange={(e) => handleChange(e)}/>
                   </div>
 
                   <div className={styles.main__form_holder_item}>
                       <label className={styles.main__form_label} for="adress">Адрес</label>
-                      <input type="text" id="adress" className={styles.main__form_input} placeholder="Введите адрес" required />
+                      <input type="text" id="adress" name = "address" className={styles.main__form_input} placeholder="Введите адрес" required onChange={(e) => handleChange(e)}/>
                   </div>
               </div>
               <input style={{opacity: isFull ? 1 : 0.5}} type="submit" value="Далее" class={styles.main__form_submit} disabled = {!isFull} />

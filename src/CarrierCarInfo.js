@@ -53,20 +53,49 @@ const CarrierCarInfo = ({api, phoneNumber, access_token}) => {
     setIsFull(allFilled)
     let name = e.target.name
     let value = e.target.value
-    if (e.target.files && e.target.files.length > 0){
-      console.log("heerjfkasljdfkls")
-      value = e.target.files[0];
+    if (name == 'sizes'){
+      var sizes = {height: value.split('/')[2], width: value.split('/')[1], length: value.split('/')[0]}
+      setInputs(values => ({
+        ...values,
+        ...sizes
+      }));
+      console.log('ashjdfkasdhfklasdhfjkasdhf')
+    } else{
+      if (e.target.files && e.target.files.length > 0){
+        console.log("heerjfkasljdfkls")
+        value = e.target.files[0];
+      }
+      setInputs(values => ({...values, [name]: value}));
     }
-    setInputs(values => ({...values, [name]: value}));
   }
 
   const sendData = (e) => {
     e.preventDefault();
     console.log(inputs);
-    if (1){
-      const targetUrl = "/carrier_documents";
-      window.location.href = targetUrl;
-    }
+    var truck_json = inputs;
+    delete truck_json.car_photo;
+    delete truck_json.passport;
+    console.log(truck_json)
+    fetch(api + "trucks/create/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}` 
+      },
+      body: JSON.stringify(
+        truck_json
+      ),
+    }).then((response) => {
+      if (response.ok){
+        const targetUrl = "/carrier_documents";
+        window.location.href = targetUrl;
+      }else{
+        var body = response.json()
+        body.then(response => {
+          console.log(response)
+        });
+      }
+    })
   }
   return (
     <body>
@@ -117,7 +146,7 @@ const CarrierCarInfo = ({api, phoneNumber, access_token}) => {
 
             <div class={styles.main__form_holder}>
               <label class={styles.main__form_label} for="size">Габариты кузова</label>
-              <input type="text" id="size" class={styles.main__form_input} placeholder="д/ш/в" name = "sizes" required/>
+              <input type="text" id="size" class={styles.main__form_input} placeholder="д/ш/в" name = "sizes" required onChange={(e) => handleChange(e)}/>
             </div>
 
             <div class={styles.main__form_holder}>
